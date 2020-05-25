@@ -12,7 +12,6 @@ import android.widget.ImageView;
 
 import com.android.proveyourworth.R;
 
-import java.io.BufferedReader;
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.File;
@@ -20,27 +19,22 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.io.Reader;
-import java.io.UnsupportedEncodingException;
-import java.nio.charset.StandardCharsets;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
+/**
+ * Util class to handle the I/O method needed.
+ */
 public class Util {
 
     /**
-     * Save image into divice.
+     * Save image into device.
      *
-     * @param bitmapImage
-     * @param context
-     * @param name
-     * @return
+     * @param bitmapImage image to save.
+     * @param context     application context.
+     * @param name        file name eje: test.jpg
+     * @return String with the absolute path.
      */
     public static String saveToInternalStorage(Bitmap bitmapImage, Context context, String name) {
         ContextWrapper cw = new ContextWrapper(context);
-        // path to /data/data/yourapp/app_data/imageDir
 
         String name_ = "payload"; //Folder name in device android/data/
         File directory = cw.getDir(name_, Context.MODE_PRIVATE);
@@ -48,14 +42,12 @@ public class Util {
         // Create imageDir
         File path = new File(directory, name);
 
-        FileOutputStream fos = null;
+        FileOutputStream fileOutputStream;
         try {
-
-            fos = new FileOutputStream(path);
-
+            fileOutputStream = new FileOutputStream(path);
             // Use the compress method on the BitMap object to write image to the OutputStream
-            bitmapImage.compress(Bitmap.CompressFormat.JPEG, 100, fos);
-            fos.close();
+            bitmapImage.compress(Bitmap.CompressFormat.JPEG, 100, fileOutputStream);
+            fileOutputStream.close();
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -66,9 +58,9 @@ public class Util {
     /**
      * Method to retrieve image from your device
      *
-     * @param path
-     * @param name
-     * @return
+     * @param path file dir path
+     * @param name file name eje: test.jpg
+     * @return bitmap of the file
      */
     public static Bitmap loadImageFromStorage(String path, String name) {
         Bitmap bitmap;
@@ -88,19 +80,6 @@ public class Util {
     }
 
 
-    public static void saveImage(DataInputStream reader) throws FileNotFoundException, IOException {
-        int byteRead = -1;
-        DataOutputStream outFile = new DataOutputStream(
-                new FileOutputStream(new File("/app/src/main/res/drawable/image_test.jpg")));
-
-        while ((byteRead = reader.read()) != -1) {
-            outFile.writeByte(byteRead);
-        }
-        outFile.flush();
-        outFile.close();
-    }
-
-
     public static Bitmap drawTextOnBitmap(Context context, ImageView imageView, String... text) {
         Bitmap bitmap = BitmapFactory.decodeResource(context.getResources(),
                 R.drawable.ic_image_for_page).copy(Bitmap.Config.ARGB_8888, true);
@@ -114,7 +93,9 @@ public class Util {
         paint.setTextSize(context.getResources().getDimension(R.dimen.text_size));
 
 
-        canvas.drawText(text[0], -0, bitmap.getHeight() - 500, paint);
+        canvas.drawText("Nombre:" + "hector", -0, bitmap.getHeight() - 600, paint);
+        canvas.drawText("Token: " + "98909898989", 0, bitmap.getHeight() - 400, paint);
+        canvas.drawText("Email: " + "hector122@gmail.com", 0, bitmap.getHeight() - 200, paint);
 
         imageView.setImageBitmap(bitmap);
 

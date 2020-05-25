@@ -26,6 +26,7 @@ import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
 import okhttp3.ResponseBody;
 import retrofit2.Call;
+import retrofit2.Callback;
 import retrofit2.Response;
 
 public class BackgroundService extends IntentService {
@@ -118,7 +119,7 @@ public class BackgroundService extends IntentService {
 //                        "foldername", "ic_image.jpg"));
     }
 
-    private void summit() {
+    private void summitTonyStark() {
         File file = new File("/storage/emulated/0/Download/Corrections 6.jpg");
         RequestBody requestFile =
                 RequestBody.create(MediaType.parse("multipart/form-data"), file);
@@ -126,7 +127,18 @@ public class BackgroundService extends IntentService {
         MultipartBody.Part body =
                 MultipartBody.Part.createFormData("image", file.getName(), requestFile);
 
-        Call<ResponseBody> response = mService.postReaper(mSessionId, body);
+        Call<ResponseBody> call = mService.postReaper(mSessionId, body);
+        call.enqueue(new Callback<ResponseBody>() {
+            @Override
+            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+
+            }
+
+            @Override
+            public void onFailure(Call<ResponseBody> call, Throwable t) {
+
+            }
+        });
     }
 
 

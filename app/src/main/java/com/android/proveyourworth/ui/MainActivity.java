@@ -11,6 +11,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.android.proveyourworth.R;
 import com.android.proveyourworth.repository.BackgroundService;
+import com.android.proveyourworth.util.Util;
 import com.google.android.material.textfield.TextInputEditText;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
@@ -47,7 +48,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
      */
     private void startServiceIntent(){
         Intent intent = new Intent(this, BackgroundService.class);
-        ComponentName componentName = startService(intent);
+        startService(intent);
+
+        Util.drawTextOnBitmap(this, mImageView, "");
     }
 
     @Override
