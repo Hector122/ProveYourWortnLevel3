@@ -1,14 +1,16 @@
 package com.android.proveyourworth.ui;
 
+import android.content.ComponentName;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
-import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.android.proveyourworth.R;
+import com.android.proveyourworth.repository.BackgroundService;
 import com.google.android.material.textfield.TextInputEditText;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
@@ -16,8 +18,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private TextInputEditText mUsername;
     private ImageView mImageView;
 
-    private TextView textViewTest;
-
+    private BackgroundService mClient;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -26,7 +27,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         initializer();
 
-
+        startServiceIntent();
     }
 
     /**
@@ -39,18 +40,22 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         mUsername = findViewById(R.id.txt_username);
 
         mImageView = findViewById(R.id.img_load);
-
-        textViewTest = findViewById(R.id.txt_test);
     }
 
+    /**
+     * Start background services to show in view.
+     */
+    private void startServiceIntent(){
+        Intent intent = new Intent(this, BackgroundService.class);
+        ComponentName componentName = startService(intent);
+    }
 
     @Override
     public void onClick(View view) {
         if (view.getId() == R.id.btn_summit) {
-            ClientImpl client = new ClientImpl(this);
-            client.start();
-            client.getImagePayload(mImageView);
 
+            //client.getImagePayload(mImageView);
+            // client.onDraw(mImageView);
 
 //            Intent intent = new Intent(this, WebViewActivity.class);
 //            startActivity(intent);

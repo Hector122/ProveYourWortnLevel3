@@ -22,7 +22,7 @@ public class WebViewActivity extends AppCompatActivity {
         webView.loadUrl(URL);
 
         WebSettings webSettings = webView.getSettings();
-        webSettings.setJavaScriptEnabled(true);
+        //webSettings.setJavaScriptEnabled(true);
 
         // set action bar
         if (getSupportActionBar() != null) {
