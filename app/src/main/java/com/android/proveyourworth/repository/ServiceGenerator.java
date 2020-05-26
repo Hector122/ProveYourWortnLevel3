@@ -1,12 +1,15 @@
 package com.android.proveyourworth.repository;
 
+import java.util.concurrent.TimeUnit;
+
 import okhttp3.OkHttpClient;
 import retrofit2.Retrofit;
 
 public class ServiceGenerator {
     private static String BASE_URL = "https://www.proveyourworth.net/level3/";
 
-    private static OkHttpClient.Builder httpClient = new OkHttpClient.Builder();
+    private static OkHttpClient.Builder httpClient = new OkHttpClient.Builder()
+            .writeTimeout(10, TimeUnit.SECONDS);
 
     private static Retrofit.Builder builder =
             new Retrofit.Builder()

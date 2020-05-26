@@ -5,15 +5,19 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.os.Environment;
 import android.util.Log;
 
+import com.android.proveyourworth.R;
 import com.android.proveyourworth.util.Util;
 
 import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.io.OutputStream;
 import java.io.Reader;
 import java.nio.charset.StandardCharsets;
 import java.util.regex.Matcher;
@@ -47,7 +51,7 @@ public class ServiceClient {
     /**
      * Constructor.
      *
-     * @param context
+     * @param context Application Context.
      */
     public ServiceClient(Context context) {
         this.mContext = context;
@@ -121,14 +125,15 @@ public class ServiceClient {
         bitmap = Util.drawTextOnBitmap(mContext, bitmap, mHashToken);
 
         Util.saveToInternalStorage(bitmap, mContext, Util.IMAGE_NAME);
+
+        createExternalStoragePrivateFile();
     }
 
     /**
      * POST the image and the resume data.
      */
     public void summit() {
-        // add resume
-        File resumeFile = new File(Util.PATH_RESUME, Util.RESUME_NAME);
+        File resumeFile = new File(mContext.getExternalFilesDir(Environment.DIRECTORY_DOCUMENTS), Util.RESUME_NAME);
         RequestBody resumeBody = RequestBody.create(MediaType.parse("application/pdf"), resumeFile);
 
         //add Image
@@ -138,36 +143,39 @@ public class ServiceClient {
         MultipartBody.Part bodyImage =
                 MultipartBody.Part.createFormData("image", imageFile.getName(), requestFile);
 
-        Call<ResponseBody> call = mService.postReaper(mSessionId, /*resumeBody,*/ bodyImage);
+        Call<ResponseBody> call = mService.postReaper(mSessionId, resumeBody, bodyImage);
         call.enqueue(new Callback<ResponseBody>() {
-            // Use dialog construction
-            final AlertDialog.Builder builder = new AlertDialog.Builder(mContext)
-                    .setTitle("Prove you worth");
-
             @Override
             public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
                 Log.i("Code: ", String.valueOf(response.code()));
-                builder.setPositiveButton("Close", new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int which) {
-                        // Continue with delete operation
-                        dialog.dismiss();
-                    }
-                });
-                builder.setMessage("Done! ").show();
+                showTextInDialog("Done! ");
             }
 
             @Override
             public void onFailure(Call<ResponseBody> call, Throwable t) {
                 Log.i("Code: ", t.getMessage());
-                builder.setPositiveButton("Close", new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int which) {
-                        // Continue with delete operation
-                        dialog.dismiss();
-                    }
-                });
-                builder.setMessage(t.getMessage()).show();
+                showTextInDialog(t.getMessage());
             }
         });
+    }
+
+    /**
+     * Show text Dialog.
+     *
+     * @param text String text to show.
+     */
+    private void showTextInDialog(String text) {
+        // Use dialog construction
+        final AlertDialog.Builder builder = new AlertDialog.Builder(mContext)
+                .setTitle("Prove you worth");
+
+        builder.setPositiveButton("Close", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int which) {
+                // Continue with delete operation
+                dialog.dismiss();
+            }
+        });
+        builder.setMessage(text).show();
     }
 
     /**
@@ -197,5 +205,32 @@ public class ServiceClient {
         }
 
         return builder.toString();
+    }
+
+    /**
+     * White PDF file into external storage.
+     */
+    void createExternalStoragePrivateFile() {
+        // Create a path where we will place our private file on external storage.
+        File file = new File(mContext.getExternalFilesDir(Environment.DIRECTORY_DOCUMENTS), Util.RESUME_NAME);
+
+        try {
+            // Very simple code to copy a picture from the application's
+            // resource into the external file.  Note that this code does
+            // no error checking, and assumes the picture is small (does not
+            // try to copy it in chunks).  Note that if external storage is
+            // not currently mounted this will silently fail.
+            InputStream is = mContext.getResources().openRawResource(R.raw.resume);
+            OutputStream os = new FileOutputStream(file);
+            byte[] data = new byte[is.available()];
+            is.read(data);
+            os.write(data);
+            is.close();
+            os.close();
+        } catch (IOException e) {
+            // Unable to create file, likely because external storage is
+            // not currently mounted.
+            Log.w("ExternalStorage", "Error writing " + file, e);
+        }
     }
 }

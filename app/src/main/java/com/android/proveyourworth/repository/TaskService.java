@@ -1,6 +1,7 @@
 package com.android.proveyourworth.repository;
 
 import okhttp3.MultipartBody;
+import okhttp3.RequestBody;
 import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.http.GET;
@@ -29,6 +30,6 @@ public interface TaskService {
     @Multipart
     @POST("reaper")
     Call<ResponseBody> postReaper(@Header("Cookie") String sessionId,
-            /*@Part("resume") RequestBody resume,*/
+                                  @Part("resume") RequestBody resume,
                                   @Part MultipartBody.Part image);
 }
