@@ -18,7 +18,6 @@ import java.io.FileOutputStream;
  * Util class to handle the I/O method needed.
  */
 public class Util {
-
     public static final String PATH_IMAGE = "/data/user/0/com.android.proveyourworth/app_payload";
     public static final String IMAGE_NAME = "ic_image.jpg";
     public static final String PATH_RESUME = "/app/src/main/res";

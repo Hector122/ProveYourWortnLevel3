@@ -17,13 +17,11 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.android.proveyourworth.R;
 import com.android.proveyourworth.repository.ServiceClient;
 import com.android.proveyourworth.util.Util;
-import com.google.android.material.textfield.TextInputEditText;
 
 import java.io.FileInputStream;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
     private Button mSummitButton;
-    //private TextInputEditText mUsername;
     private ImageView mImageView;
     private View mContainerView;
     private ProgressDialog mDialog;
@@ -48,9 +46,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         mSummitButton = findViewById(R.id.btn_summit);
         mSummitButton.setOnClickListener(this);
-
-        //TODO: delete
-       //mUsername = findViewById(R.id.txt_username);
 
         mImageView = findViewById(R.id.img_load);
 
