@@ -21,7 +21,6 @@
             </intent-filter>
         </activity>
         <activity android:name=".ui.WebViewActivity" />
-        <service android:enabled="true" android:name=".repository.BackgroundService"></service>
     </application>
 
 </manifest>

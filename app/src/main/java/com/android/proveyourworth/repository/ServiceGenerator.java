@@ -3,8 +3,7 @@ package com.android.proveyourworth.repository;
 import okhttp3.OkHttpClient;
 import retrofit2.Retrofit;
 
-public class ClientService {
-
+public class ServiceGenerator {
     private static String BASE_URL = "https://www.proveyourworth.net/level3/";
 
     private static OkHttpClient.Builder httpClient = new OkHttpClient.Builder();

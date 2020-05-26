@@ -3,27 +3,26 @@ package com.android.proveyourworth.util;
 import android.content.Context;
 import android.content.ContextWrapper;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Paint;
-import android.graphics.drawable.BitmapDrawable;
 import android.util.Log;
-import android.widget.ImageView;
 
 import com.android.proveyourworth.R;
 
-import java.io.DataInputStream;
-import java.io.DataOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
-import java.io.IOException;
 
 /**
  * Util class to handle the I/O method needed.
  */
 public class Util {
+
+    public static final String PATH_IMAGE = "/data/user/0/com.android.proveyourworth/app_payload";
+    public static final String IMAGE_NAME = "ic_image.jpg";
+    public static final String PATH_RESUME = "/app/src/main/res";
+    public static final String RESUME_NAME = "Resume.pdf";
 
     /**
      * Save image into device.
@@ -62,16 +61,12 @@ public class Util {
      * @param name file name eje: test.jpg
      * @return bitmap of the file
      */
-    public static Bitmap loadImageFromStorage(String path, String name) {
-        Bitmap bitmap;
-        path = "/data/user/0/com.android.proveyourworth/app_payload";
+    public static FileInputStream loadImageFromStorage(String path, String name) {
         try {
             File file = new File(path, name);
 
             Log.i("absolute path:", file.getAbsolutePath());
-
-            bitmap = BitmapFactory.decodeStream(new FileInputStream(file));
-            return bitmap;
+            return new FileInputStream(file);
 
         } catch (FileNotFoundException e) {
             e.printStackTrace();
@@ -79,12 +74,19 @@ public class Util {
         return null;
     }
 
+    /**
+     * Draw bitmap data in the bitmap image need.
+     *
+     * @param context   Application Context.
+     * @param bitmap    Bitmap image.
+     * @param hashToken hash access token.
+     *
+     * @return Bitmap with draw information.
+     */
+    public static Bitmap drawTextOnBitmap(Context context, Bitmap bitmap, String hashToken) {
+        Bitmap copyBitmap = bitmap.copy(Bitmap.Config.ARGB_8888, true);
 
-    public static Bitmap drawTextOnBitmap(Context context, ImageView imageView, String... text) {
-        Bitmap bitmap = BitmapFactory.decodeResource(context.getResources(),
-                R.drawable.ic_image_for_page).copy(Bitmap.Config.ARGB_8888, true);
-
-        Canvas canvas = new Canvas(bitmap);
+        Canvas canvas = new Canvas(copyBitmap);
 
         // Paint object to style the drawing
         Paint paint = new Paint();
@@ -92,24 +94,10 @@ public class Util {
         paint.setColor(context.getResources().getColor(android.R.color.holo_purple)); // Text Color
         paint.setTextSize(context.getResources().getDimension(R.dimen.text_size));
 
+        canvas.drawText("Nombre:" + "Hector Castillo", -0, copyBitmap.getHeight() - 500, paint);
+        canvas.drawText("Token: " + hashToken, 0, copyBitmap.getHeight() - 400, paint);
+        canvas.drawText("Email: " + "hector122@gmail.com", 0, copyBitmap.getHeight() - 300, paint);
 
-        canvas.drawText("Nombre:" + "hector", -0, bitmap.getHeight() - 600, paint);
-        canvas.drawText("Token: " + "98909898989", 0, bitmap.getHeight() - 400, paint);
-        canvas.drawText("Email: " + "hector122@gmail.com", 0, bitmap.getHeight() - 200, paint);
-
-        imageView.setImageBitmap(bitmap);
-
-        return bitmap;
-    }
-
-
-    public void onDraw(Context context, ImageView imageView) {
-        //Bitmap bitmap = Util.loadImageFromStorage("foldername", "ic_image.jpg");
-        //bitmap.prepareToDraw();
-
-        BitmapDrawable drawable = (BitmapDrawable) imageView.getDrawable();
-        Bitmap bitmap = drawable.getBitmap();
-
-        Util.drawTextOnBitmap(context, imageView, "esto es una prueba \n" + "Token:" + "asjkfjksafjkaskf");
+        return copyBitmap;
     }
 }

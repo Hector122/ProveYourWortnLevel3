@@ -4,44 +4,34 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:id="@+id/container"
     tools:context=".ui.MainActivity">
 
     <ImageView
         android:id="@+id/img_load"
         android:layout_width="match_parent"
-        android:layout_height="300dp"
+        android:layout_height="500dp"
         android:layout_marginTop="@dimen/activity_horizontal_margin"
-        android:src="@drawable/ic_image_for_page"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <!-- TODO: delete -->
-<!--    <TextView-->
-<!--        android:id="@+id/txt_test"-->
+<!--    <com.google.android.material.textfield.TextInputLayout-->
+<!--        android:id="@+id/txt_container"-->
 <!--        android:layout_width="match_parent"-->
 <!--        android:layout_height="wrap_content"-->
-<!--        android:text="respose"-->
-<!--        app:layout_constraintLeft_toRightOf="parent"-->
+<!--        android:layout_margin="@dimen/image_margin_top"-->
+<!--        android:layout_marginStart="8dp"-->
+<!--        app:layout_constraintLeft_toLeftOf="parent"-->
 <!--        app:layout_constraintRight_toRightOf="parent"-->
-<!--        app:layout_constraintTop_toBottomOf="@id/img_load"/>-->
+<!--        app:layout_constraintTop_toBottomOf="@id/img_load">-->
 
-    <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/txt_container"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="@dimen/image_margin_top"
-        android:layout_marginStart="8dp"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/img_load">
+<!--        <com.google.android.material.textfield.TextInputEditText-->
+<!--            android:id="@+id/txt_username"-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:hint="@string/user_name"-->
+<!--            android:maxLines="1" />-->
 
-        <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/txt_username"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="@string/user_name"
-            android:maxLines="1" />
-
-    </com.google.android.material.textfield.TextInputLayout>
+<!--    </com.google.android.material.textfield.TextInputLayout>-->
 
     <Button
         android:id="@+id/btn_summit"
@@ -49,7 +39,7 @@
         android:layout_height="wrap_content"
         android:layout_margin="@dimen/activity_vertical_margin"
         android:text="@string/summit"
-        app:layout_constraintTop_toBottomOf="@id/txt_container">
+        app:layout_constraintTop_toBottomOf="@id/img_load">
 
     </Button>
 
