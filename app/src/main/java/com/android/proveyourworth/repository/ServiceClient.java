@@ -85,7 +85,7 @@ public class ServiceClient {
         Response<ResponseBody> response = call.execute();
 
         //Get session id
-        mSessionId = response.headers().get(SET_COOKIES).substring(0, 36);
+        mSessionId = response.headers().get(SET_COOKIES);
         Log.i(TAG, TAG_SESSION_ID + mSessionId);
 
         //get and set hash token
@@ -113,6 +113,10 @@ public class ServiceClient {
     private void payloadImageContent() throws IOException {
         Call<ResponseBody> call = mService.getPayload(mSessionId);
         Response<ResponseBody> response = call.execute();
+
+        // X-Oh-Look A new session cookie...
+        mSessionId = response.headers().get(SET_COOKIES);
+        Log.i(TAG, TAG_SESSION_ID + mSessionId);
 
         Log.i(TAG, call.request().url().toString());
 
@@ -162,6 +166,8 @@ public class ServiceClient {
                 mContext.getString(R.string.about));
 
         Call<ResponseBody> call = mService.postReaper(mSessionId, image, resume, code, email, name, about);
+
+        Log.i(TAG, call.request().url().toString());
 
         call.enqueue(new Callback<ResponseBody>() {
             @Override
