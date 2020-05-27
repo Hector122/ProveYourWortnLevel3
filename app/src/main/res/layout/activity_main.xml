@@ -13,26 +13,6 @@
         android:layout_height="500dp"
         android:layout_marginTop="@dimen/activity_horizontal_margin"
         app:layout_constraintTop_toTopOf="parent" />
-
-<!--    <com.google.android.material.textfield.TextInputLayout-->
-<!--        android:id="@+id/txt_container"-->
-<!--        android:layout_width="match_parent"-->
-<!--        android:layout_height="wrap_content"-->
-<!--        android:layout_margin="@dimen/image_margin_top"-->
-<!--        android:layout_marginStart="8dp"-->
-<!--        app:layout_constraintLeft_toLeftOf="parent"-->
-<!--        app:layout_constraintRight_toRightOf="parent"-->
-<!--        app:layout_constraintTop_toBottomOf="@id/img_load">-->
-
-<!--        <com.google.android.material.textfield.TextInputEditText-->
-<!--            android:id="@+id/txt_username"-->
-<!--            android:layout_width="match_parent"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            android:hint="@string/user_name"-->
-<!--            android:maxLines="1" />-->
-
-<!--    </com.google.android.material.textfield.TextInputLayout>-->
-
     <Button
         android:id="@+id/btn_summit"
         android:layout_width="match_parent"

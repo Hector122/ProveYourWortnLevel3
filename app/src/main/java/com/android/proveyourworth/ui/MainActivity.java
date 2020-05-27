@@ -32,9 +32,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        initializer();
+       initializer();
 
-        startServiceIntent();
+       startServiceIntent();
     }
 
     /**
@@ -97,8 +97,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     @Override
     public void onClick(View view) {
         if (view.getId() == R.id.btn_summit) {
-            Intent intent = new Intent(this, WebViewActivity.class);
-
             mClient.summit();
         }
     }

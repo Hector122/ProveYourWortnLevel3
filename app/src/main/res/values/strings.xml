@@ -3,8 +3,8 @@
     <string name="user_name">Your Name</string>
     <string name="summit">summit</string>
     <string name="load_image">Load image</string>
-
-
-    <string name="mail">hector122@gmail.com</string>
     <string name="loading">Loading...</string>
+    <string name="email">hector122@gmail.com</string>
+    <string name="name">Hector Castillo</string>
+    <string name="about">Mobile developer with five years of experience developing applications for Android platforms and make software solutions.</string>
 </resources>

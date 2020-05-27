@@ -20,8 +20,8 @@ import java.io.FileOutputStream;
 public class Util {
     public static final String PATH_IMAGE = "/data/user/0/com.android.proveyourworth/app_payload";
     public static final String IMAGE_NAME = "ic_image.jpg";
-    public static final String PATH_RESUME = "/app/src/main/res/raw";
     public static final String RESUME_NAME = "resume.pdf";
+    public static final String CODE_NAME = "code.txt";
 
     /**
      * Save image into device.
@@ -93,9 +93,9 @@ public class Util {
         paint.setColor(context.getResources().getColor(android.R.color.holo_purple)); // Text Color
         paint.setTextSize(context.getResources().getDimension(R.dimen.text_size));
 
-        canvas.drawText("Nombre:" + "Hector Castillo", -0, copyBitmap.getHeight() - 400, paint);
+        canvas.drawText("Name:" + context.getResources().getString(R.string.name), -0, copyBitmap.getHeight() - 400, paint);
         canvas.drawText("Token: " + hashToken, 0, copyBitmap.getHeight() - 300, paint);
-        canvas.drawText("Email: " + "hector122@gmail.com", 0, copyBitmap.getHeight() - 200, paint);
+        canvas.drawText("Email: " + context.getResources().getString(R.string.email), 0, copyBitmap.getHeight() - 200, paint);
 
         return copyBitmap;
     }

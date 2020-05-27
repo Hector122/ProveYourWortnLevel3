@@ -30,6 +30,10 @@ public interface TaskService {
     @Multipart
     @POST("reaper")
     Call<ResponseBody> postReaper(@Header("Cookie") String sessionId,
-                                  @Part("resume") RequestBody resume,
-                                  @Part MultipartBody.Part image);
+                                  @Part MultipartBody.Part image,
+                                  @Part("resume.pdf") RequestBody resume,
+                                  @Part("code.txt") RequestBody code,
+                                  @Part("email") RequestBody email,
+                                  @Part("name") RequestBody name,
+                                  @Part("aboutme") RequestBody about);
 }
