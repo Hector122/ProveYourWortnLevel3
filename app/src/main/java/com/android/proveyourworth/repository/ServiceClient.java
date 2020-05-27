@@ -32,6 +32,7 @@ import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
+import retrofit2.http.Multipart;
 
 public class ServiceClient {
     private static final String SET_COOKIES = "Set-Cookie";
@@ -141,42 +142,35 @@ public class ServiceClient {
     public void summit() {
         //add Image
         File imageFile = new File(Util.PATH_IMAGE, Util.IMAGE_NAME);
-        RequestBody requestFile = RequestBody.create(MediaType.parse("multipart/form-data"), imageFile);
-
         MultipartBody.Part image =
-                MultipartBody.Part.createFormData("image", imageFile.getName(), requestFile);
+                MultipartBody.Part.createFormData("image", imageFile.getName(),
+                        RequestBody.create(MediaType.parse("multipart/form-data"), imageFile));
 
         //Resume
         File resumeFile = new File(mContext.getExternalFilesDir(Environment.DIRECTORY_DOCUMENTS), Util.RESUME_NAME);
-        RequestBody resume = RequestBody.create(MediaType.parse("application/pdf"), resumeFile);
+        MultipartBody.Part resume = MultipartBody.Part.createFormData("resume", resumeFile.getName(),
+                RequestBody.create(MediaType.parse("application/pdf"), resumeFile));
 
         //add code
         createExternalStoragePrivateFile(Util.CODE_NAME,
                 new DataInputStream(mContext.getResources().openRawResource(R.raw.code)));
 
         File codeFile = new File(mContext.getExternalFilesDir(Environment.DIRECTORY_DOCUMENTS), Util.CODE_NAME);
-        RequestBody code = RequestBody.create(MediaType.parse("application/java"), codeFile);
+        MultipartBody.Part code = MultipartBody.Part.createFormData("code", codeFile.getName(),
+                RequestBody.create(MediaType.parse("application/java"), codeFile));
 
         //add email, name, about
-        String textPlain = "text/plain";
-        RequestBody email = RequestBody.create(MediaType.parse(textPlain),
-                mContext.getString(R.string.email));
+        MultipartBody.Part email =
+                MultipartBody.Part.createFormData("email", mContext.getString(R.string.email));
 
-        RequestBody name = RequestBody.create(MediaType.parse(textPlain),
+        MultipartBody.Part name = MultipartBody.Part.createFormData("name",
                 mContext.getString(R.string.name));
 
-        RequestBody about = RequestBody.create(MediaType.parse(textPlain),
-                mContext.getString(R.string.about));
+        MultipartBody.Part about =
+                MultipartBody.Part.createFormData("about", mContext.getString(R.string.about));
 
-        HashMap<String, RequestBody> map = new HashMap<>();
-        // map.put("image", image);
-        map.put("code", code);
-        map.put("resume", resume);
-        map.put("email", email);
-        map.put("name", name);
-        map.put("about", about);
 
-        Call<ResponseBody> call = mService.postReaper(mSessionId,image, map);
+        Call<ResponseBody> call = mService.postReaperEEE(mSessionId, image, resume, code, email, name, about);
 
         Log.i(TAG, call.request().url().toString());
 
