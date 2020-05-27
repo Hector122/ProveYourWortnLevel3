@@ -35,8 +35,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         setContentView(R.layout.activity_main);
 
         initializer();
-
-        startServiceIntent();
     }
 
     /**
@@ -98,7 +96,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     @Override
     public void onClick(View view) {
         if (view.getId() == R.id.btn_summit) {
-            mClient.summit();
+            startServiceIntent();
         }
     }
 }

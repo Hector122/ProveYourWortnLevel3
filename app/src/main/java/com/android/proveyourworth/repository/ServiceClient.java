@@ -71,6 +71,8 @@ public class ServiceClient {
 
             payloadImageContent();
 
+            summit();
+
         } catch (Exception ex) {
             ex.printStackTrace();
             Log.e(TAG, TAG_ERROR + ex.getMessage());
@@ -175,6 +177,13 @@ public class ServiceClient {
             public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
                 Log.i("Code: ", String.valueOf(response.code()));
                 showTextInDialog("Done! ");
+                try {
+                    String body = readStream(response.body().byteStream());
+                    Log.i(TAG, TAG_HASH_TOKEN + mHashToken);
+                    Log.i(TAG, TAG_BODY + body);
+                }catch (Exception e){
+                    e.printStackTrace();
+                }
             }
 
             @Override
