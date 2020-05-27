@@ -1,5 +1,7 @@
 package com.android.proveyourworth.repository;
 
+import java.util.Map;
+
 import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
 import okhttp3.ResponseBody;
@@ -9,6 +11,7 @@ import retrofit2.http.Header;
 import retrofit2.http.Multipart;
 import retrofit2.http.POST;
 import retrofit2.http.Part;
+import retrofit2.http.PartMap;
 import retrofit2.http.Query;
 import retrofit2.http.Streaming;
 
@@ -29,11 +32,6 @@ public interface TaskService {
 
     @Multipart
     @POST("reaper")
-    Call<ResponseBody> postReaper(@Header("Cookie") String sessionId,
-                                  @Part MultipartBody.Part image,
-                                  @Part("resume") RequestBody resume,
-                                  @Part("code") RequestBody code,
-                                  @Part("email") RequestBody email,
-                                  @Part("name") RequestBody name,
-                                  @Part("aboutme") RequestBody about);
+    Call<ResponseBody> postReaper(@Part MultipartBody.Part image,
+                                    @PartMap Map<String, RequestBody> partMap);
 }

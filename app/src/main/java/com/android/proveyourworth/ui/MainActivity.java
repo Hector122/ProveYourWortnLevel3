@@ -3,7 +3,6 @@ package com.android.proveyourworth.ui;
 import android.app.ProgressDialog;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.HandlerThread;
@@ -27,7 +26,6 @@ import java.io.FileInputStream;
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
     private Button mSummitButton;
     private ImageView mImageView;
-    private View mContainerView;
     private ProgressDialog mDialog;
     private ServiceClient mClient;
 
@@ -43,8 +41,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
      * Initializer the principal variables of this class.
      */
     private void initializer() {
-        mContainerView = findViewById(R.id.container);
-
         mSummitButton = findViewById(R.id.btn_summit);
         mSummitButton.setOnClickListener(this);
 
@@ -75,9 +71,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     public void run() {
                         mImageView.setImageBitmap(getImageFromInternalStorage());
                         mImageView.setBackgroundColor(ContextCompat.getColor(MainActivity.this, R.color.white));
+
                         mDialog.dismiss();
-
-
                     }
                 });
             }

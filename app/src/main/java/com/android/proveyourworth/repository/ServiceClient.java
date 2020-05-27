@@ -14,7 +14,6 @@ import com.android.proveyourworth.util.Util;
 import java.io.BufferedReader;
 import java.io.DataInputStream;
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
@@ -22,6 +21,7 @@ import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.io.Reader;
 import java.nio.charset.StandardCharsets;
+import java.util.HashMap;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -139,10 +139,6 @@ public class ServiceClient {
      * POST the image and the resume data.
      */
     public void summit() {
-        //Resume
-        File resumeFile = new File(mContext.getExternalFilesDir(Environment.DIRECTORY_DOCUMENTS), Util.RESUME_NAME);
-        RequestBody resume = RequestBody.create(MediaType.parse("application/pdf"), resumeFile);
-
         //add Image
         File imageFile = new File(Util.PATH_IMAGE, Util.IMAGE_NAME);
         RequestBody requestFile = RequestBody.create(MediaType.parse("multipart/form-data"), imageFile);
@@ -150,7 +146,11 @@ public class ServiceClient {
         MultipartBody.Part image =
                 MultipartBody.Part.createFormData("image", imageFile.getName(), requestFile);
 
-        //add code.txt
+        //Resume
+        File resumeFile = new File(mContext.getExternalFilesDir(Environment.DIRECTORY_DOCUMENTS), Util.RESUME_NAME);
+        RequestBody resume = RequestBody.create(MediaType.parse("application/pdf"), resumeFile);
+
+        //add code
         createExternalStoragePrivateFile(Util.CODE_NAME,
                 new DataInputStream(mContext.getResources().openRawResource(R.raw.code)));
 
@@ -168,7 +168,15 @@ public class ServiceClient {
         RequestBody about = RequestBody.create(MediaType.parse(textPlain),
                 mContext.getString(R.string.about));
 
-        Call<ResponseBody> call = mService.postReaper(mSessionId, image, resume, code, email, name, about);
+        HashMap<String, RequestBody> map = new HashMap<>();
+        // map.put("image", image);
+        map.put("code", code);
+        map.put("resume", resume);
+        map.put("email", email);
+        map.put("name", name);
+        map.put("about", about);
+
+        Call<ResponseBody> call = mService.postReaper(image, map);
 
         Log.i(TAG, call.request().url().toString());
 
@@ -181,7 +189,7 @@ public class ServiceClient {
                     String body = readStream(response.body().byteStream());
                     Log.i(TAG, TAG_HASH_TOKEN + mHashToken);
                     Log.i(TAG, TAG_BODY + body);
-                }catch (Exception e){
+                } catch (Exception e) {
                     e.printStackTrace();
                 }
             }
