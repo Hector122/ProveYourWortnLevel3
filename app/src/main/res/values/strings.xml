@@ -3,6 +3,8 @@
     <string name="user_name">Your Name</string>
     <string name="summit">summit</string>
     <string name="load_image">Load image</string>
+    <string name="thread_name">tony_stark</string>
+    <string name="error_request">Sorry! we have a error.</string>
     <string name="loading">Loading...</string>
     <string name="email">hector122@gmail.com</string>
     <string name="name">Hector Castillo</string>

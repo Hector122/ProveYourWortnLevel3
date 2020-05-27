@@ -1,7 +1,6 @@
 package com.android.proveyourworth.ui;
 
 import android.app.ProgressDialog;
-import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
@@ -20,6 +19,9 @@ import com.android.proveyourworth.util.Util;
 
 import java.io.FileInputStream;
 
+/**
+ * Main activity that handler the ui.
+ */
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
     private Button mSummitButton;
     private ImageView mImageView;
@@ -32,9 +34,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-       initializer();
+        initializer();
 
-       startServiceIntent();
+        startServiceIntent();
     }
 
     /**
@@ -58,7 +60,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
      * Start background services to show in view.
      */
     private void startServiceIntent() {
-        final HandlerThread handlerThread = new HandlerThread("Tony_Stark");
+        final HandlerThread handlerThread = new HandlerThread(getString(R.string.thread_name));
         handlerThread.start();
 
         Runnable runnable = new Runnable() {
@@ -73,7 +75,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     public void run() {
                         mImageView.setImageBitmap(getImageFromInternalStorage());
                         mContainerView.setVisibility(View.VISIBLE);
-
                         mDialog.dismiss();
                     }
                 });
@@ -87,7 +88,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     /**
      * Get image bitmap from internal storage.
      *
-     * @return
+     * @return Bitmap.
      */
     private Bitmap getImageFromInternalStorage() {
         FileInputStream fileInputStream = Util.loadImageFromStorage(Util.PATH_IMAGE, Util.IMAGE_NAME);

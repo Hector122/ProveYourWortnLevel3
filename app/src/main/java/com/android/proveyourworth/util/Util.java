@@ -21,7 +21,7 @@ public class Util {
     public static final String PATH_IMAGE = "/data/user/0/com.android.proveyourworth/app_payload";
     public static final String IMAGE_NAME = "ic_image.jpg";
     public static final String RESUME_NAME = "resume.pdf";
-    public static final String CODE_NAME = "code.txt";
+    public static final String CODE_NAME = "ServiceClient.java";
 
     /**
      * Save image into device.
@@ -58,7 +58,7 @@ public class Util {
      *
      * @param path file dir path
      * @param name file name eje: test.jpg
-     * @return bitmap of the file
+     * @return Bitmap of the file
      */
     public static FileInputStream loadImageFromStorage(String path, String name) {
         try {

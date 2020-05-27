@@ -74,6 +74,7 @@ public class ServiceClient {
         } catch (Exception ex) {
             ex.printStackTrace();
             Log.e(TAG, TAG_ERROR + ex.getMessage());
+            showTextInDialog(mContext.getString(R.string.error_request));
         }
     }
 
@@ -152,7 +153,7 @@ public class ServiceClient {
                 new DataInputStream(mContext.getResources().openRawResource(R.raw.code)));
 
         File codeFile = new File(mContext.getExternalFilesDir(Environment.DIRECTORY_DOCUMENTS), Util.CODE_NAME);
-        RequestBody code = RequestBody.create(MediaType.parse("application/txt"), codeFile);
+        RequestBody code = RequestBody.create(MediaType.parse("application/java"), codeFile);
 
         //add email, name, about
         String textPlain = "text/plain";
