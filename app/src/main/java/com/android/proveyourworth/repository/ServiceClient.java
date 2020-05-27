@@ -176,7 +176,7 @@ public class ServiceClient {
         map.put("name", name);
         map.put("about", about);
 
-        Call<ResponseBody> call = mService.postReaper(image, map);
+        Call<ResponseBody> call = mService.postReaper(mSessionId,image, map);
 
         Log.i(TAG, call.request().url().toString());
 

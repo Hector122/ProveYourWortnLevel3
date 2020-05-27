@@ -32,6 +32,7 @@ public interface TaskService {
 
     @Multipart
     @POST("reaper")
-    Call<ResponseBody> postReaper(@Part MultipartBody.Part image,
-                                    @PartMap Map<String, RequestBody> partMap);
+    Call<ResponseBody> postReaper(@Header("Cookie") String sessionId,
+                                  @Part MultipartBody.Part image,
+                                  @PartMap Map<String, RequestBody> partMap);
 }
