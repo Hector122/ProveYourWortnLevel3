@@ -3,6 +3,7 @@ package com.android.proveyourworth.ui;
 import android.app.ProgressDialog;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.HandlerThread;
@@ -12,6 +13,7 @@ import android.widget.Button;
 import android.widget.ImageView;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.ContextCompat;
 
 import com.android.proveyourworth.R;
 import com.android.proveyourworth.repository.ServiceClient;
@@ -42,7 +44,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
      */
     private void initializer() {
         mContainerView = findViewById(R.id.container);
-        mContainerView.setVisibility(View.INVISIBLE);
 
         mSummitButton = findViewById(R.id.btn_summit);
         mSummitButton.setOnClickListener(this);
@@ -51,13 +52,14 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         mDialog = new ProgressDialog(this);
         mDialog.setMessage(getString(R.string.loading)); // Setting Message
-        mDialog.show();
     }
 
     /**
      * Start background services to show in view.
      */
     private void startServiceIntent() {
+        mDialog.show();
+
         final HandlerThread handlerThread = new HandlerThread(getString(R.string.thread_name));
         handlerThread.start();
 
@@ -72,8 +74,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     @Override
                     public void run() {
                         mImageView.setImageBitmap(getImageFromInternalStorage());
-                        mContainerView.setVisibility(View.VISIBLE);
+                        mImageView.setBackgroundColor(ContextCompat.getColor(MainActivity.this, R.color.white));
                         mDialog.dismiss();
+
+
                     }
                 });
             }
